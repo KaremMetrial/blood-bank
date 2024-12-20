@@ -20,10 +20,7 @@ class ClientResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'd_o_b' => $this->d_o_b,
-            'blood_type' => [
-                'id' => $this->bloodType->id,
-                'name' => $this->bloodType->name,
-            ],
+            'blood_types' => BloodTypeResource::collection($this->bloodTypes),
             'last_donation_date' => $this->last_donation_date->diffForHumans(),
             'cities' => [
                 'id' => $this->city->id,
