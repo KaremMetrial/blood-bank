@@ -21,7 +21,7 @@ class ClientResource extends JsonResource
             'email' => $this->email,
             'd_o_b' => $this->d_o_b,
             'blood_types' => BloodTypeResource::collection($this->bloodTypes),
-            'last_donation_date' => $this->last_donation_date->diffForHumans(),
+            'last_donation_date' => $this->last_donation_date,
             'cities' => [
                 'id' => $this->city->id,
                 'name' => $this->city->name,

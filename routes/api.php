@@ -5,8 +5,10 @@ use App\Http\Controllers\Api\BloodTypeController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DonationRequestController;
 use App\Http\Controllers\Api\GovernorateController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -68,5 +70,16 @@ Route::prefix('v1')->group(function () {
         Route::get('/profile', [ProfileController::class, 'show']);
         Route::put('/profile/update', [ProfileController::class, 'update']);
 
+        // Posts routes
+        Route::get('/posts', [PostController::class, 'index']);
+        Route::get('/posts/{id}', [PostController::class, 'show']);
+
+        // Favorites routes
+        Route::post('/add-favorites', [PostController::class, 'addToFavorites']);
+        Route::get('/favorites', [PostController::class, 'getFavorites']);
+
+        // Donation requests routes
+        Route::get('/donation-requests', [DonationRequestController::class, 'index']);
+        Route::post('/donation-requests', [DonationRequestController::class, 'store']);
     });
 });

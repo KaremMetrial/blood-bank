@@ -21,35 +21,44 @@ class NotificationController extends Controller
      */
     public function getNotificationSetting(): JsonResponse
     {
+        // Get the authenticated user
         $user = auth('api')->user();
-
+        // Prepare the data to be returned
         $data = [
             'bloodTypes' => BloodTypeResource::collection($user->bloodTypes),
             'governorates' => GovernorateResource::collection($user->governorates),
             'textNotification' => Setting::value('notification_setting_text'),
         ];
 
+        // Return a successful response
         return $this->successResponse($data, 'Notification settings retrieved successfully');
     }
 
     public function updateNotificationSetting(UpdateNotificationSettingRequest $request): JsonResponse
     {
-        $validated = $request->validated();
+        try {
+            // Validate the request data
+            $validated = $request->validated();
+            // Get the authenticated user
+            $user = auth('api')->user();
 
-        $user = auth('api')->user();
+            // Update the user's notification settings
+            $user->governorates()->sync([$validated['governorate_id']]);
+            $user->bloodTypes()->sync([$validated['blood_type_id']]);
 
-        $user->governorates()->syncWithoutDetaching([$validated['governorate_id']]);
-        $user->bloodTypes()->syncWithoutDetaching([$validated['blood_type_id']]);
-
-        $bloodTypes = $user->bloodTypes;
-        $governorates = $user->governorates;
-
-        $data = [
-            'bloodTypes' => BloodTypeResource::collection($bloodTypes),
-            'governorates' => GovernorateResource::collection($governorates),
-        ];
-
-        return $this->successResponse($data, 'Notification settings updated successfully');
-
+            // Get the user's blood types and governorates
+            $bloodTypes = $user->bloodTypes;
+            $governorates = $user->governorates;
+            // Prepare the data to be returned
+            $data = [
+                'bloodTypes' => BloodTypeResource::collection($bloodTypes),
+                'governorates' => GovernorateResource::collection($governorates),
+            ];
+            // Return a successful response
+            return $this->successResponse($data, 'Notification settings updated successfully');
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->errorResponse('Notification settings updated failed', 500);
+        }
     }
 }

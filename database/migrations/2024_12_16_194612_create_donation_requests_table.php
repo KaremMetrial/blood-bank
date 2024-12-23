@@ -16,12 +16,12 @@ class CreateDonationRequestsTable extends Migration {
 			$table->integer('city_id')->unsigned();
 			$table->string('hospital_name');
 			$table->integer('blood_type_id')->unsigned();
-			$table->date('patient_age');
+			$table->integer('patient_age');
 			$table->integer('bags_num');
 			$table->string('hospital_address');
 			$table->text('details');
-			$table->decimal('latitude', 10,8);
-			$table->decimal('longtitude', 10,8);
+			$table->decimal('latitude', 10,8)->nullable();
+			$table->decimal('longtitude', 10,8)->nullable();
 			$table->integer('client_id')->unsigned();
 		});
 	}

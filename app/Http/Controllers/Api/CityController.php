@@ -15,11 +15,13 @@ class CityController extends Controller
      */
     public function index()
     {
+        // Retrieve all cities with their associated governorate
         $cities = City::with('governorate')->get();
-
+        // Check if any cities were found
         if ($cities->isEmpty()) {
             return $this->errorResponse('No cities found', 404);
         }
+        // Return the cities as a resource collection
         return $this->successResponse(CityResource::collection($cities), 'Cities retrieved successfully');
     }
 
