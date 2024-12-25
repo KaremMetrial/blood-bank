@@ -18,33 +18,27 @@ class PostController extends Controller
     public function index(Request $request)
     {
         try {
+            /// Initialize posts query
+            $query = Post::query()
+            // Filter by category_id if provided
+                ->when($request->filled('category_id'), function ($query) use ($request) {
+                    $query->where('category_id', $request->category_id);
+                })
+            // Filter by search query if provided
+                ->when($request->filled('search'), function ($query) use ($request) {
+                    $query->where('title', 'LIKE', "%{$request->search}%");
+                })
+                ->latest();
 
-            // Check if the request has a category_id or search parameter
-            if ($request->has('category_id')) {
+            // Paginate the filtered results
+            $posts = $query->paginate(self::PAGINATION_COUNT);
 
-                // If category_id is provided, filter posts by category
-                $posts = Post::where('category_id', $request->category_id)->paginate(self::PAGINATION_COUNT);
-
-            } else if ($request->has('search')) {
-
-                $search = $request->search;
-                // If search parameter is provided, filter posts by title
-                $posts = Post::where('title', 'LIKE', "%$search%")->paginate(self::PAGINATION_COUNT);
-
-            } else {
-
-                // If no category_id or search parameter, get all posts
-                $posts = Post::paginate(self::PAGINATION_COUNT);
-            }
-            /// Check if there are any posts
+            // Check if any posts were found
             if ($posts->isEmpty()) {
-
-                // If no posts, return an error response
+                /// Return an error response if no posts were found
                 return $this->errorResponse('No posts found', 404);
-
             }
-
-            // Return a success response with the posts and pagination information
+            // Return a success response with the posts
             $data = [
                 'posts' => PostResource::collection($posts),
                 'pagination' => [
@@ -58,17 +52,13 @@ class PostController extends Controller
                     'last_page_url' => $posts->url($posts->lastPage()),
                 ],
             ];
-
-            // Return a success response with the posts and pagination information
+            // Return a success response with the posts
             return $this->successResponse($data, 'Posts retrieved successfully');
-
         } catch (\Exception $e) {
-
-            // If an exception occurs, return an error response
             return $this->errorResponse($e->getMessage(), 500);
-
         }
     }
+
     public function show($id)
     {
         try {
@@ -124,7 +114,7 @@ class PostController extends Controller
     }
     public function getFavorites()
     {
-        try{
+        try {
             // Get the authenticated user
             $user = auth('api')->user();
 
@@ -140,8 +130,7 @@ class PostController extends Controller
             // Return a success response with the favorite posts
             return $this->successResponse(PostResource::collection($favorites), 'Favorites retrieved successfully');
 
-
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             // If an exception occurs, return an error response
             return $this->errorResponse($e->getMessage(), 500);
         }

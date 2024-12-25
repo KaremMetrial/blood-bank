@@ -27,11 +27,31 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     // Public routes
     Route::controller(AuthController::class)->group(function () {
-
+        // Authentication routes
         Route::post('register', 'register');
         Route::post('login', 'login');
 
+        // Password reset routes
+        Route::post('reset-password', 'resetPassword');
+        // Password reset routes
+        Route::post('new-password', 'newPassword');
+
     });
+
+    // Governorate routes
+    Route::get('governorates', [GovernorateController::class, 'index']);
+
+    // City routes
+    Route::get('cities', [CityController::class, 'index']);
+
+    // Settings routes
+    Route::get('settings', [SettingController::class, 'index']);
+
+    // Gategory routes
+    Route::get('categories', [CategoryController::class, 'index']);
+
+    // Blood type routes
+    Route::get('blood-types', [BloodTypeController::class, 'index']);
 
     // Protected routes
     Route::middleware('auth:api')->group(function () {
@@ -39,28 +59,10 @@ Route::prefix('v1')->group(function () {
         Route::controller(AuthController::class)->group(function () {
             // Logout routes
             Route::post('logout', 'logout');
-            // Password reset routes
-            Route::post('reset-password', 'resetPassword');
-            Route::post('new-password', 'newPassword');
         });
-
-        // Governorate routes
-        Route::get('governorates', [GovernorateController::class, 'index']);
-
-        // City routes
-        Route::get('cities', [CityController::class, 'index']);
-
-        // Settings routes
-        Route::get('settings', [SettingController::class, 'index']);
 
         // Contact routes
         Route::post('contact-us', [ContactController::class, 'contact']);
-
-        // Gategory routes
-        Route::get('categories', [CategoryController::class, 'index']);
-
-        // Blood type routes
-        Route::get('blood-types', [BloodTypeController::class, 'index']);
 
         // Notification Setting
         Route::get('notification-setting', [NotificationController::class, 'getNotificationSetting']);
@@ -80,6 +82,8 @@ Route::prefix('v1')->group(function () {
 
         // Donation requests routes
         Route::get('/donation-requests', [DonationRequestController::class, 'index']);
+        Route::get('/donation-requests/{id}', [DonationRequestController::class, 'show']);
         Route::post('/donation-requests', [DonationRequestController::class, 'store']);
+
     });
 });
