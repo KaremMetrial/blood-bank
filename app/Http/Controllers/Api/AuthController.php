@@ -10,10 +10,12 @@ use App\Http\Requests\Api\ResetPasswordRequest;
 use App\Http\Resources\ClientResource;
 use App\Mail\ResetPassword;
 use App\Models\Client;
+use App\Models\Token;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -39,6 +41,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'client' => new ClientResource($client),
             ];
+
             return $this->successResponse($data, 'تم التسجيل بنجاح', 201);
 
         } catch (\Exception $e) {
@@ -63,6 +66,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'client' => new ClientResource($client),
             ];
+
             return $this->successResponse($data, 'تم تسجيل الدخول بنجاح', 200);
 
         } catch (JWTException $e) {

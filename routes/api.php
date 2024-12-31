@@ -68,6 +68,7 @@ Route::prefix('v1')->group(function () {
         Route::get('notification-setting', [NotificationController::class, 'getNotificationSetting']);
         Route::put('notification-setting/update', [NotificationController::class, 'updateNotificationSetting']);
 
+
         // Profile routes
         Route::get('/profile', [ProfileController::class, 'show']);
         Route::put('/profile/update', [ProfileController::class, 'update']);
@@ -84,6 +85,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/donation-requests', [DonationRequestController::class, 'index']);
         Route::get('/donation-requests/{id}', [DonationRequestController::class, 'show']);
         Route::post('/donation-requests', [DonationRequestController::class, 'store']);
+
+        // Create token for donation request
+        Route::post('create-token', [DonationRequestController::class, 'createToken']);
+        Route::delete('remove-token', [DonationRequestController::class, 'removeToken']);
+
+        // notifications routes
+        Route::get('/notifications',[NotificationController::class,'index']);
 
     });
 });

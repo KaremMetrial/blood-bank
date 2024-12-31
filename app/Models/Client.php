@@ -63,5 +63,9 @@ class Client extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Models\City');
     }
+    public function tokens()
+    {
+        return $this->hasMany(Token::class);
+    }
 
 }
