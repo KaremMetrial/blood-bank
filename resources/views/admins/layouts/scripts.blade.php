@@ -15,4 +15,5 @@
 <!-- ChartJS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
+<script src="{{ asset('js/toastr.min.js') }}"></script>
 @stack('scripts')

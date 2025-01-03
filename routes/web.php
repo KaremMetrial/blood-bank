@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\GovernorateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,13 +13,20 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+    // Dashboard Routes
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Governorate Routes
+    Route::resource('governorates', GovernorateController::class);
 });
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admins.home.index');
-    });
-});
+
+
+require __DIR__ . '/auth.php';

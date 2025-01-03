@@ -32,8 +32,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -42,12 +42,20 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link active">
+                            <a href="./index2.html" class="nav-link ">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dashboard v2</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('governorates.index') }}" class="nav-link {{ request()->routeIs('governorates.index') ? 'active' : ''  }}" >
+                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                        <p>
+                            Governorates
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -59,7 +67,14 @@
                 </li>
                 <div class="mt-auto"></div>
                 <li class="nav-item">
-                    <button type="button" class="btn btn-danger btn-block text-white rounded">Log Out</button>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                this.closest('form').submit(); "class="btn
+                            btn-danger btn-block text-white rounded">Log Out</a>
+                    </form>
+
                 </li>
             </ul>
         </nav>
