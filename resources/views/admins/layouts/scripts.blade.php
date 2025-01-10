@@ -16,4 +16,12 @@
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
 <script src="{{ asset('js/toastr.min.js') }}"></script>
+<script>
+    @if ($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error('{{ $error }}')
+    @endforeach
+    @endif
+</script>
+
 @stack('scripts')

@@ -1,11 +1,14 @@
 <?php
 
+    use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\Web\CategoryController;
     use App\Http\Controllers\Web\CityController;
     use App\Http\Controllers\Web\ClientController;
     use App\Http\Controllers\Web\ContactController;
     use App\Http\Controllers\Web\DashboardController;
+    use App\Http\Controllers\Web\DonationController;
     use App\Http\Controllers\Web\GovernorateController;
+    use App\Http\Controllers\Web\SettingController;
     use Illuminate\Support\Facades\Route;
 
     /*
@@ -43,7 +46,13 @@
         Route::resource('contacts', ContactController::class)->only(['index', 'destroy']);
 
         // Donation Routes
-        Route::resource('donations', DonationController::class)->only(['index', 'destroy', 'show']);
+        Route::resource('donations', DonationController::class)->only(['index', 'destroy']);
+
+        // Settings Routes
+        Route::get('settings', [SettingController::class, 'settings'])->name('settings');
+        Route::put('settings', [SettingController::class, 'updateSettings'])->name('settings.update');
+
+
     });
 
 
