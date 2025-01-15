@@ -14,11 +14,12 @@
         {
             // \App\Models\User::factory(10)->create();
 
-            \App\Models\User::factory()->create([
+          $admin =   \App\Models\User::factory()->create([
                 'name' => 'admin',
                 'email' => 'karem.metrial@hotmail.com',
                 'password' => bcrypt('123456789'),
             ]);
+          $admin->syncRoles('admin');
 
             $this->call([
                 GovernoratesSeeder::class,

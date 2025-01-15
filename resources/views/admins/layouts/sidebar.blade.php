@@ -1,8 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+             class="brand-image img-circle elevation-3"
+             style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
@@ -18,14 +19,13 @@
             </div>
         </div>
 
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column h-100" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <!-- Menu Items -->
                 <li class="nav-item">
-                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : ''  }} ">
+                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -34,40 +34,49 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('clients.index') }}" class="nav-link {{ request()->routeIs('clients.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('clients.index') }}"
+                       class="nav-link {{ request()->is('admin/clients*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
                             Clients
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ route('governorates.index') }}" class="nav-link {{ request()->routeIs('governorates.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('governorates.index') }}"
+                       class="nav-link {{ request()->is('admin/governorates*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-map"></i>
                         <p>
                             Governorates
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ route('cities.index') }}" class="nav-link {{ request()->routeIs('cities.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('cities.index') }}"
+                       class="nav-link {{ request()->is('admin/cities*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-building"></i>
                         <p>
                             Cities
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('categories.index') }}"
+                       class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tags"></i>
                         <p>
                             Categories
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ route('donations.index') }}" class="nav-link {{ request()->routeIs('donations.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('donations.index') }}"
+                       class="nav-link {{ request()->is('admin/donations*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-hand-holding-heart"></i>
                         <p>
                             Donations
                         </p>
@@ -75,35 +84,56 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('contacts.index') }}" class="nav-link {{ request()->routeIs('contacts.index') ? 'active' : ''  }}" >
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <a href="{{ route('users.index') }}"
+                       class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-alt"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('roles.index') }}"
+                       class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-shield"></i>
+                        <p>
+                            Roles
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('contacts.index') }}"
+                       class="nav-link {{ request()->is('admin/contacts*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-address-book"></i>
                         <p>
                             Contacts
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="{{ route('settings') }}" class="nav-link {{ request()->routeIs('settings') ? 'active' : ''  }}">
+                    <a href="{{ route('settings') }}"
+                       class="nav-link {{ request()->is('admin/settings') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs"></i>
                         <p>
                             Setting
                         </p>
                     </a>
                 </li>
-                <div class="mt-auto"></div>
-                <li class="nav-item">
+
+                <!-- Logout Button -->
+                <li class="nav-item mt-auto">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                this.closest('form').submit(); "class="btn
-                            btn-danger btn-block text-white rounded">Log Out</a>
+                           onclick="event.preventDefault(); this.closest('form').submit();"
+                           class="btn btn-danger btn-block text-white rounded">Log Out</a>
                     </form>
-
                 </li>
             </ul>
         </nav>
-
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

@@ -8,7 +8,10 @@
     use App\Http\Controllers\Web\DashboardController;
     use App\Http\Controllers\Web\DonationController;
     use App\Http\Controllers\Web\GovernorateController;
+    use App\Http\Controllers\Web\PermissionController;
+    use App\Http\Controllers\Web\RoleController;
     use App\Http\Controllers\Web\SettingController;
+    use App\Http\Controllers\Web\UserController;
     use Illuminate\Support\Facades\Route;
 
     /*
@@ -23,12 +26,12 @@
      */
 
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'role:admin'])->group(function () {
         // Dashboard Routes
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     });
 
-    Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+    Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], function () {
 
         // Governorate Routes
         Route::resource('governorates', GovernorateController::class)->except(['show']);
@@ -52,7 +55,11 @@
         Route::get('settings', [SettingController::class, 'settings'])->name('settings');
         Route::put('settings', [SettingController::class, 'updateSettings'])->name('settings.update');
 
+        // Users Routes
+        Route::resource('users', UserController::class)->except(['show']);
 
+        // Roles Routes
+        Route::resource('roles', RoleController::class);
     });
 
 
